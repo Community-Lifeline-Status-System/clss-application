@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: Print current working directory
+        run: pwd
       - name: list files in the current directory
         run: ls -la
       - name: Copy clss_deployment_package.zip to ship directory
