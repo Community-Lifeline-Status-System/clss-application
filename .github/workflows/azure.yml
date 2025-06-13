@@ -18,9 +18,12 @@ jobs:
         run: mkdir -p ship
       - name: Copy clss_deployment_package.zip to ship directory
         run: cp clss_deployment_package.zip ship/
+      - name: Print files in ship directory
+        run: ls -la ship
+      - name: Move to ship directory
+        run: cd ship
       - name: Unzip deployment package
         run: unzip -q clss_deployment_package.zip -d clss_deployment_package
-        working-directory: ship
       - name: Move to deployment package directory
         run: cd clss_deployment_package
       - name: Update config.json with secrets
