@@ -21,7 +21,7 @@ jobs:
       - name: Print files in ship directory
         run: ls -la ship
       - name: Unzip deployment package
-        run: unzip -q ship/clss_deployment_package.zip -d ship/clss_deployment_package
+        run: unzip -q /ship/clss_deployment_package.zip -d /ship/clss_deployment_package
       - name: Update config.json with secrets
         run: |
           sed -i "s|\"portalUrl\": \"${{ secrets.AGOL_PORTAL_URL }}\"|g" clss_deployment_package/config.json
