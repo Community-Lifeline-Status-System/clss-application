@@ -22,16 +22,19 @@ jobs:
         run: ls -la ship
       - name: Print current working directory after copying
         run: pwd
-      - name: Check if clss_deployment_package.zip exists
+      - name: Check if clss_deployment_package.zip exists and unzip it
         run: |
-          if [ ! -f ship/clss_deployment_package.zip ]; then
-            echo "clss_deployment_package.zip not found in ship directory."
-            exit 1
+          if [ -f /ship/clss_deployment_package.zip ]; then
+            echo "clss_deployment_package.zip exists."
+            run unzip -q /ship/clss_deployment_package.zip -d /ship/clss_deployment_package
           else
-            echo "clss_deployment_package.zip found."
+            echo "clss_deployment_package.zip does not exist."
+            exit 1
           fi
-      - name: Unzip deployment package
-        run: unzip -q /ship/clss_deployment_package.zip -d /ship/clss_deployment_package
+      - name: Print files in /ship/clss_deployment_package
+        run: ls -la /ship/clss_deployment_package
+      # - name: Unzip deployment package
+      #   run: unzip -q /ship/clss_deployment_package.zip -d /ship/clss_deployment_package
       # - name: Update config.json with secrets
       #   run: |
       #     sed -i "s|\"portalUrl\": \"${{ secrets.AGOL_PORTAL_URL }}\"|g" clss_deployment_package/config.json
