@@ -12,6 +12,8 @@ jobs:
         uses: actions/checkout@v4
       - name: list files in the current directory
         run: ls -la
+      - name: Copy clss_deployment_package.zip to ship directory
+        run: cp clss_deployment_package.zip ship/
       - name: Unzip deployment package
         run: unzip -q clss_deployment_package.zip -d clss_deployment_package
         working-directory: ship
