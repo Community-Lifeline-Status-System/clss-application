@@ -26,9 +26,8 @@ jobs:
         run: ls -la
       - name: Check if clss_deployment_package.zip exists and unzip it
         run: |
-          if [ -f /ship/clss_deployment_package.zip ]; then
-            echo "clss_deployment_package.zip exists."
-            
+          if [ -f ship/clss_deployment_package.zip ]; then
+            echo "clss_deployment_package.zip exists."            
           else
             echo "clss_deployment_package.zip does not exist."
             exit 1
