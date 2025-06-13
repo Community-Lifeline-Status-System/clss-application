@@ -22,6 +22,8 @@ jobs:
         run: ls -la ship
       - name: Print current working directory after copying
         run: pwd
+      - name: Print files in the current directory
+        run: ls -la
       - name: Check if clss_deployment_package.zip exists and unzip it
         run: |
           if [ -f /ship/clss_deployment_package.zip ]; then
