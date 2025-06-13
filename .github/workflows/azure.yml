@@ -26,7 +26,7 @@ jobs:
         run: |
           if [ -f /ship/clss_deployment_package.zip ]; then
             echo "clss_deployment_package.zip exists."
-            run unzip -q /ship/clss_deployment_package.zip -d /ship/clss_deployment_package
+            
           else
             echo "clss_deployment_package.zip does not exist."
             exit 1
