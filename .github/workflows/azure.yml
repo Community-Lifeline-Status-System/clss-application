@@ -16,31 +16,31 @@ jobs:
         run: ls -la
       - name: Create ship directory
         run: mkdir -p ship
-      - name: Copy clss_deployment_package.zip to ship directory
-        run: cp clss_deployment_package.zip ship/
+      - name: Copy README.zip to ship directory
+        run: cp README.zip ship/
       - name: Print files in ship directory
         run: ls -la ship
       - name: Print current working directory after copying
         run: pwd
       - name: Print files in the current directory
         run: ls -la
-      - name: Check if clss_deployment_package.zip exists and unzip it
+      - name: Check if README.zip exists and unzip it
         run: |
-          if [ -f ship/clss_deployment_package.zip ]; then
-            echo "clss_deployment_package.zip exists."                       
+          if [ -f ship/README.zip ]; then
+            echo "README.zip exists."                       
           else
-            echo "clss_deployment_package.zip does not exist."
+            echo "README.zip does not exist."
             exit 1
           fi
-      - name: Unzip clss_deployment_package.zip
-        run: unzip -q ship/clss_deployment_package.zip -d ship/clss_deployment_package
+      - name: Unzip README.zip
+        run: unzip -q ship/README.zip -d ship/README
         working-directory: ship
       - name: Print current working directory after unzipping
         run: pwd
-      - name: Print files in ship/clss_deployment_package after unzipping
-        run: ls -la ship/clss_deployment_package
-      - name: Print files in ship/clss_deployment_package
-        run: ls -la ship/clss_deployment_package
+      - name: Print files in ship/README after unzipping
+        run: ls -la ship/README
+      - name: Print files in ship/README
+        run: ls -la ship/README
       # - name: Unzip deployment package
       #   run: unzip -q /ship/clss_deployment_package.zip -d /ship/clss_deployment_package
       # - name: Update config.json with secrets
