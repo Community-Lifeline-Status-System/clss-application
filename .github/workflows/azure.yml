@@ -33,7 +33,7 @@ jobs:
             exit 1
           fi
       - name: Unzip README.zip
-        run: unzip -q ship/README.zip -d ship/README
+        run: unzip -q ship/README.zip -d ship/
         working-directory: ship
       - name: Print current working directory after unzipping
         run: pwd
