@@ -27,12 +27,18 @@ jobs:
       - name: Check if clss_deployment_package.zip exists and unzip it
         run: |
           if [ -f ship/clss_deployment_package.zip ]; then
-            echo "clss_deployment_package.zip exists." 
-            run unzip -q ship/clss_deployment_package.zip -d ship/clss_deployment_package           
+            echo "clss_deployment_package.zip exists."                       
           else
             echo "clss_deployment_package.zip does not exist."
             exit 1
           fi
+      - name: Unzip clss_deployment_package.zip
+        run: unzip -q ship/clss_deployment_package.zip -d ship/clss_deployment_package
+        working-directory: ship
+      - name: Print current working directory after unzipping
+        run: pwd
+      - name: Print files in ship/clss_deployment_package after unzipping
+        run: ls -la ship/clss_deployment_package
       - name: Print files in ship/clss_deployment_package
         run: ls -la ship/clss_deployment_package
       # - name: Unzip deployment package
