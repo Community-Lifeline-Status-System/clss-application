@@ -22,10 +22,10 @@ jobs:
         run: ls -la ship
 
       - name: Create ship directory
-        run: mkdir -p ship/README
+        run: mkdir -p ship/arcgis-experience-builder-1.17
 
       - name: Unzip README.zip
-        run: unzip ship/README.zip -d ship/
+        run: unzip ship/arcgis-experience-builder-1.17.zip -d ship/
 
       - name: Print files in ship directory
         run: ls -la ship
