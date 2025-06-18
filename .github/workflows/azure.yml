@@ -24,6 +24,9 @@ jobs:
       - name: Change directory to ship
         run: cd ship
 
+      - name: Print current working directory
+        run: pwd
+
       - name: Verify zip file exists
         run: |
           ls -la
