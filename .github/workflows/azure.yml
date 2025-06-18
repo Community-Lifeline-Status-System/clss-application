@@ -21,9 +21,6 @@ jobs:
       - name: Print files in ship directory
         run: ls -la ship
 
-      - name: Create ship directory
-        run: mkdir -p ship/arcgis-experience-builder-1.17
-
       - name: Verify zip file exists
         run: |
           ls -la
