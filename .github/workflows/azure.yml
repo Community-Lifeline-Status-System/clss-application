@@ -21,6 +21,9 @@ jobs:
       - name: Print files in ship directory
         run: ls -la ship
 
+      - name: Create ship directory
+        run: mkdir -p ship/README
+
       - name: Unzip README.zip
         run: unzip ship/README.zip -d ship/
 
