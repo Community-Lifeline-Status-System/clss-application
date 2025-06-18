@@ -16,8 +16,8 @@ jobs:
         run: ls -la
       - name: Create ship directory
         run: mkdir -p ship
-      - name: Copy arcgis-experience-builder-1.17.zip to ship directory
-        run: cp arcgis-experience-builder-1.17.zip ship/
+      - name: Copy test.zip to ship directory
+        run: cp test.zip ship/
       - name: Print files in ship directory
         run: ls -la ship
 
@@ -29,17 +29,17 @@ jobs:
 
       - name: Verify zip file exists
         run: |
-          test -f arcgis-experience-builder-1.17.zip
+          test -f test.zip
         working-directory: ship
 
       - name: Check file info
         run: |
-          file arcgis-experience-builder-1.17.zip
-          ls -lh arcgis-experience-builder-1.17.zip
+          file test.zip
+          ls -lh test.zip
         working-directory: ship
 
       # - name: Unzip zip file
-      #   run: unzip  arcgis-experience-builder-1.17.zip
+      #   run: unzip  test.zip
       #   working-directory: ship
 
       # - name: Print files in ship directory
