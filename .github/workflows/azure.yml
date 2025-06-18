@@ -16,8 +16,8 @@ jobs:
         run: ls -la
       - name: Create ship directory
         run: mkdir -p ship
-      - name: Copy test.zip to ship directory
-        run: cp test.zip ship/
+      - name: Copy archived.tar.gz to ship directory
+        run: cp archived.tar.gz ship/
       - name: Print files in ship directory
         run: ls -la ship
 
@@ -29,17 +29,17 @@ jobs:
 
       - name: Verify zip file exists
         run: |
-          test -f test.zip
+          test -f archived.tar.gz
         working-directory: ship
 
       - name: Check file info
         run: |
-          file test.zip
-          ls -lh test.zip
+          file archived.tar.gz
+          ls -lh archived.tar.gz
         working-directory: ship
 
       # - name: Unzip zip file
-      #   run: unzip  test.zip
+      #   run: unzip  archived.tar.gz
       #   working-directory: ship
 
       # - name: Print files in ship directory
