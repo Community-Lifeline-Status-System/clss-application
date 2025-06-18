@@ -31,6 +31,7 @@ jobs:
         run: |
           ls -la
           test -f arcgis-experience-builder-1.17.zip
+        working-directory: ship
 
       - name: Unzip README.zip
         run: unzip arcgis-experience-builder-1.17.zip -d .
