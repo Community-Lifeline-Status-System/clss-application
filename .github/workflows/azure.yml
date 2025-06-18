@@ -35,6 +35,7 @@ jobs:
 
       - name: Unzip README.zip
         run: unzip arcgis-experience-builder-1.17.zip -d .
+        working-directory: ship
 
       - name: Print files in ship directory
         run: ls -la
