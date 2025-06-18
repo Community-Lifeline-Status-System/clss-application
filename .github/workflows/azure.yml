@@ -21,16 +21,19 @@ jobs:
       - name: Print files in ship directory
         run: ls -la ship
 
+      - name: Change directory to ship
+        run: cd ship
+
       - name: Verify zip file exists
         run: |
           ls -la
-          test -f ship/arcgis-experience-builder-1.17.zip
+          test -f arcgis-experience-builder-1.17.zip
 
       - name: Unzip README.zip
-        run: unzip ship/arcgis-experience-builder-1.17.zip -d ship/
+        run: unzip arcgis-experience-builder-1.17.zip -d .
 
       - name: Print files in ship directory
-        run: ls -la ship
+        run: ls -la
       # - name: Unzip deployment package
       #   run: unzip -q /ship/clss_deployment_package.zip -d /ship/clss_deployment_package
       # - name: Update config.json with secrets
