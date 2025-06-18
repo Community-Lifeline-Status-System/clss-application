@@ -44,9 +44,11 @@ jobs:
           tar -xzf archived.tar.gz -C extracted
         working-directory: ship
 
-      # - name: Print files in ship directory
-      #   run: ls -la
-      # - name: Unzip deployment package
+      - name: Print files in ship directory
+        run: ls -la
+        working-directory:
+          ship
+          # - name: Unzip deployment package
       #   run: unzip -q /ship/clss_deployment_package.zip -d /ship/clss_deployment_package
       # - name: Update config.json with secrets
       #   run: |
