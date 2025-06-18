@@ -29,16 +29,21 @@ jobs:
 
       - name: Verify zip file exists
         run: |
-          ls -la
           test -f arcgis-experience-builder-1.17.zip
         working-directory: ship
 
-      - name: Unzip zip file
-        run: unzip arcgis-experience-builder-1.17.zip
+      - name: Check file info
+        run: |
+          file arcgis-experience-builder-1.17.zip
+          ls -lh arcgis-experience-builder-1.17.zip
         working-directory: ship
 
-      - name: Print files in ship directory
-        run: ls -la
+      # - name: Unzip zip file
+      #   run: unzip  arcgis-experience-builder-1.17.zip
+      #   working-directory: ship
+
+      # - name: Print files in ship directory
+      #   run: ls -la
       # - name: Unzip deployment package
       #   run: unzip -q /ship/clss_deployment_package.zip -d /ship/clss_deployment_package
       # - name: Update config.json with secrets
