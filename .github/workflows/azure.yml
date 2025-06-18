@@ -20,27 +20,12 @@ jobs:
         run: cp README.zip ship/
       - name: Print files in ship directory
         run: ls -la ship
-      - name: Print current working directory after copying
-        run: pwd
-      - name: Print files in the current directory
-        run: ls -la
-      - name: Check if README.zip exists and unzip it
-        run: |
-          if [ -f ship/README.zip ]; then
-            echo "README.zip exists."                       
-          else
-            echo "README.zip does not exist."
-            exit 1
-          fi
+
       - name: Unzip README.zip
-        run: unzip -q ship/README.zip -d ship/
-        working-directory: ship
-      - name: Print current working directory after unzipping
-        run: pwd
-      - name: Print files in ship/README after unzipping
-        run: ls -la ship/README
-      - name: Print files in ship/README
-        run: ls -la ship/README
+        run: unzip ship/README.zip -d ship/
+
+      - name: Print files in ship directory
+        run: ls -la ship
       # - name: Unzip deployment package
       #   run: unzip -q /ship/clss_deployment_package.zip -d /ship/clss_deployment_package
       # - name: Update config.json with secrets
