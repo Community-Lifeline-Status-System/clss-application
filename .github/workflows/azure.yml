@@ -22,7 +22,12 @@ jobs:
         run: ls -la ship
 
       - name: Create ship directory
-        run: mkdir -p ship/arcgis-experience-builder-1.17
+        run: mkdir -p ship/arcgis-experience-builder-1.17.zip
+
+      - name: Verify zip file exists
+        run: |
+          ls -la
+          test -f ship/arcgis-experience-builder-1.17.zip
 
       - name: Unzip README.zip
         run: unzip ship/arcgis-experience-builder-1.17.zip -d ship/
