@@ -33,8 +33,8 @@ jobs:
           test -f arcgis-experience-builder-1.17.zip
         working-directory: ship
 
-      - name: Unzip README.zip
-        run: unzip arcgis-experience-builder-1.17.zip -d .
+      - name: Unzip zip file
+        run: unzip arcgis-experience-builder-1.17.zip
         working-directory: ship
 
       - name: Print files in ship directory
