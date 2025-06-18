@@ -38,8 +38,10 @@ jobs:
           ls -lh archived.tar.gz
         working-directory: ship
 
-      - name: Unzip zip file
-        run: unzip  archived.tar.gz
+      - name: Extract .tar.gz file
+        run: |
+          mkdir extracted
+          tar -xzf archived.tar.gz -C extracted
         working-directory: ship
 
       # - name: Print files in ship directory
