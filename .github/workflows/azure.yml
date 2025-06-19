@@ -49,7 +49,6 @@ jobs:
         run: |
           echo "Contents of clss_deployment_package.tar.gz before extraction:"
           tar -tzf clss_deployment_package.tar.gz
-        working-directory: ship
 
       - name: Extract .tar.gz file
         run: |
