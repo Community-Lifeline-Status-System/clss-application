@@ -1,43 +1,79 @@
-# name: Build and Deploy
-# on:
-#   push:
-#     branches:
-#       - main
-# jobs:
-#   DeployToAzure:
-#     name: Deploy to Azure Static Web App
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Check out repository code
-#         uses: actions/checkout@v4
-#       - name: Unzip deployment package
-#         run: unzip -q clss_deployment_package.zip -d clss_deployment_package
-#       - name: Move to deployment package directory
-#         run: cd clss_deployment_package
-#       - name: Update config.json with secrets
-#         run: |
-#           sed -i "s|\"portalUrl\": \"${{ secrets.AGOL_PORTAL_URL }}\"|g" clss_deployment_package/config.json
-#           sed -i "s|\"username\": \"${{ secrets.AGOL_USERNAME }}\"|g" clss_deployment_package/config.json
-#           sed -i "s|\"password\": \"${{ secrets.AGOL_PASSWORD }}\"|g" clss_deployment_package/config.json
-#           sed -i "s|\"appUrl\": \"${{ secrets.AZURE_WEBSITE_URL }}\"|g" clss_deployment_package/config.json
+name: Build and Deploy
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  DeployToAzure:
+    name: Deploy to Azure Static Web App
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Print current working directory
+        run: pwd
+      - name: list files in the current directory
+        run: ls -la
+      - name: Create ship directory
+        run: mkdir -p ship
+      - name: Copy archived.tar.gz to ship directory
+        run: cp archived.tar.gz ship/
+      - name: Print files in ship directory
+        run: ls -la ship
 
-#       - name: Run node script, deploy.js to create app code
-#         run: |
-#           if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
-#             node -e "require('./deploy.js').executeDeployment()"
-#           fi
+      - name: Change directory to ship
+        run: cd ship
 
-#       - name: Deploy app to azure static web app
-#         uses: Azure/static-web-apps-deploy@v1a
-#         with:
-#           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_DEPLOYMENT_TEST_SITE }}
-#           repo_token: ${{ secrets.GITHUB_TOKEN }}
-#           action: "upload"
-#           app_location: "/clss_deployment_package/app" # App source code path
-#           api_location: "" # Api source code path - optional
-#           output_location: "/clss_deployment_package/app" # Built app content directory - optional
-#           production_branch: "main"
-#           skip_app_build: true
-#           skip_api_build: true
+      - name: Print current working directory
+        run: pwd
 
-#           ###### End of Repository/Build Configurations  ######
+      - name: Verify zip file exists
+        run: |
+          test -f archived.tar.gz
+        working-directory: ship
+
+      - name: Check file info
+        run: |
+          file archived.tar.gz
+          ls -lh archived.tar.gz
+        working-directory: ship
+
+      - name: Extract .tar.gz file
+        run: |
+          mkdir extracted
+          tar -xzf archived.tar.gz -C extracted
+        working-directory: ship
+
+      - name: Print files in ship directory
+        run: ls -la
+        working-directory:
+          ship/extracted
+          # - name: Unzip deployment package
+      #   run: unzip -q /ship/clss_deployment_package.zip -d /ship/clss_deployment_package
+      # - name: Update config.json with secrets
+      #   run: |
+      #     sed -i "s|\"portalUrl\": \"${{ secrets.AGOL_PORTAL_URL }}\"|g" clss_deployment_package/config.json
+      #     sed -i "s|\"username\": \"${{ secrets.AGOL_USERNAME }}\"|g" clss_deployment_package/config.json
+      #     sed -i "s|\"password\": \"${{ secrets.AGOL_PASSWORD }}\"|g" clss_deployment_package/config.json
+      #     sed -i "s|\"appUrl\": \"${{ secrets.AZURE_WEBSITE_URL }}\"|g" clss_deployment_package/config.json
+      #   working-directory: ship/clss_deployment_package
+      # - name: Run node script, deploy.js to create app code
+      #   run: |
+      #     if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
+      #       node -e "require('./deploy.js').executeDeployment()"
+      #     fi
+
+      # - name: Deploy app to azure static web app
+      #   uses: Azure/static-web-apps-deploy@v1
+      #   with:
+      #     azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_DEPLOYMENT_TEST_SITE }}
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     action: "upload"
+      #     app_location: "/clss_deployment_package/app" # App source code path
+      #     api_location: "" # Api source code path - optional
+      #     output_location: "/clss_deployment_package/app" # Built app content directory - optional
+      #     production_branch: "main"
+      #     skip_app_build: true
+      #     skip_api_build: true
+
+      ###### End of Repository/Build Configurations  ######
