@@ -16,8 +16,8 @@ jobs:
         run: ls -la
       - name: Create ship directory
         run: mkdir -p ship
-      - name: Copy clss_deployment_package.tar.gz to ship directory
-        run: cp clss_deployment_package.tar.gz ship/
+      - name: Copy clss_deployment.zip to ship directory
+        run: cp clss_deployment.zip ship/
       - name: Print files in ship directory
         run: ls -la ship
 
@@ -29,13 +29,13 @@ jobs:
 
       - name: Verify zip file exists
         run: |
-          test -f clss_deployment_package.tar.gz
+          test -f clss_deployment.zip
         working-directory: ship
 
       - name: Check file info
         run: |
-          file clss_deployment_package.tar.gz
-          ls -lh clss_deployment_package.tar.gz
+          file clss_deployment.zip
+          ls -lh clss_deployment.zip
         working-directory: ship
 
       - name: Check if tar command is available
@@ -45,21 +45,22 @@ jobs:
             exit 1
           fi
 
-      - name: Check file before extraction
+      - name: Check if unzip command is available
         run: |
-          echo "Contents of clss_deployment_package.tar.gz before extraction:"
-          tar -tzf clss_deployment_package.tar.gz
+          if ! command -v unzip &> /dev/null; then
+            echo "unzip command not found"
+            exit 1
+          fi
 
-      - name: Extract .tar.gz file
+      - name: Unzip clss_deployment.zip
         run: |
-          mkdir extracted
-          tar -xzf clss_deployment_package.tar.gz -C extracted
+          unzip -q clss_deployment.zip -d ship
         working-directory: ship
 
-      - name: Print files in ship directory
-        run: ls -la
-        working-directory:
-          ship/extracted
+      - name: Print files in ship directory after unzip
+        run:
+          ls -la ship
+
           # - name: Unzip deployment package
       #   run: unzip -q /ship/clss_deployment_package.zip -d /ship/clss_deployment_package
       # - name: Update config.json with secrets
