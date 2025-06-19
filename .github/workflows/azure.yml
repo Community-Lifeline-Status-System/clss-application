@@ -12,30 +12,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
-      - name: Print current working directory
-        run: pwd
-      - name: list files in the current directory
-        run: ls -la
 
       - name: Verify zip file exists
         run: |
-          test -f your-archive.zip
+          test -f clss_deployment.zip
 
-      - name: Check file info
+      - name: Unzip clss_deploymen.zip
         run: |
-          file your-archive.zip
-          ls -lh your-archive.zip
-
-      - name: Check if unzip command is available
-        run: |
-          if ! command -v unzip &> /dev/null; then
-            echo "unzip command not found"
-            exit 1
-          fi
-
-      - name: Unzip your-archive.zip
-        run: |
-          unzip -q your-archive.zip
+          unzip -q clss_deploymen.zip
 
       - name: Print files in ship directory after unzip
         run:
