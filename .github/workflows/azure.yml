@@ -16,8 +16,8 @@ jobs:
         run: ls -la
       - name: Create ship directory
         run: mkdir -p ship
-      - name: Copy archived.tar.gz to ship directory
-        run: cp archived.tar.gz ship/
+      - name: Copy clss_deployment_package.tar.gz to ship directory
+        run: cp clss_deployment_package.tar.gz ship/
       - name: Print files in ship directory
         run: ls -la ship
 
@@ -29,19 +29,19 @@ jobs:
 
       - name: Verify zip file exists
         run: |
-          test -f archived.tar.gz
+          test -f clss_deployment_package.tar.gz
         working-directory: ship
 
       - name: Check file info
         run: |
-          file archived.tar.gz
-          ls -lh archived.tar.gz
+          file clss_deployment_package.tar.gz
+          ls -lh clss_deployment_package.tar.gz
         working-directory: ship
 
       - name: Extract .tar.gz file
         run: |
           mkdir extracted
-          tar -xzf archived.tar.gz -C extracted
+          tar -xzf clss_deployment_package.tar.gz -C extracted
         working-directory: ship
 
       - name: Print files in ship directory
