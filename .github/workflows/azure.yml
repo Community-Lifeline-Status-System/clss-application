@@ -10,70 +10,61 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: Print current working directory
+        run: pwd
+      - name: list files in the current directory
+        run: ls -la
 
-      - name: Zip a folder
-        run: zip -r readme.zip ./readmef
+      - name: Verify zip file exists
+        run: |
+          test -f your-archive.zip
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: your-archive
-          path: readme.zip
-    #   - name: Print current working directory
-    #     run: pwd
-    #   - name: list files in the current directory
-    #     run: ls -la
+      - name: Check file info
+        run: |
+          file your-archive.zip
+          ls -lh your-archive.zip
 
-    #   - name: Verify zip file exists
-    #     run: |
-    #       test -f readme.zip
+      - name: Check if unzip command is available
+        run: |
+          if ! command -v unzip &> /dev/null; then
+            echo "unzip command not found"
+            exit 1
+          fi
 
-    #   - name: Check file info
-    #     run: |
-    #       file readme.zip
-    #       ls -lh readme.zip
+      - name: Unzip your-archive.zip
+        run: |
+          unzip -q your-archive.zip -d
 
-    #   - name: Check if unzip command is available
-    #     run: |
-    #       if ! command -v unzip &> /dev/null; then
-    #         echo "unzip command not found"
-    #         exit 1
-    #       fi
+      - name: Print files in ship directory after unzip
+        run:
+          ls -la
 
-    #   - name: Unzip readme.zip
-    #     run: |
-    #       unzip -q readme.zip -d ship
+          # - name: Unzip deployment package
+      #   run: unzip -q /ship/clss_deployment_package.zip -d /ship/clss_deployment_package
+      # - name: Update config.json with secrets
+      #   run: |
+      #     sed -i "s|\"portalUrl\": \"${{ secrets.AGOL_PORTAL_URL }}\"|g" clss_deployment_package/config.json
+      #     sed -i "s|\"username\": \"${{ secrets.AGOL_USERNAME }}\"|g" clss_deployment_package/config.json
+      #     sed -i "s|\"password\": \"${{ secrets.AGOL_PASSWORD }}\"|g" clss_deployment_package/config.json
+      #     sed -i "s|\"appUrl\": \"${{ secrets.AZURE_WEBSITE_URL }}\"|g" clss_deployment_package/config.json
+      #   working-directory: ship/clss_deployment_package
+      # - name: Run node script, deploy.js to create app code
+      #   run: |
+      #     if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
+      #       node -e "require('./deploy.js').executeDeployment()"
+      #     fi
 
-    #   - name: Print files in ship directory after unzip
-    #     run:
-    #       ls -la ship
+      # - name: Deploy app to azure static web app
+      #   uses: Azure/static-web-apps-deploy@v1
+      #   with:
+      #     azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_DEPLOYMENT_TEST_SITE }}
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     action: "upload"
+      #     app_location: "/clss_deployment_package/app" # App source code path
+      #     api_location: "" # Api source code path - optional
+      #     output_location: "/clss_deployment_package/app" # Built app content directory - optional
+      #     production_branch: "main"
+      #     skip_app_build: true
+      #     skip_api_build: true
 
-    # - name: Unzip deployment package
-    #   run: unzip -q /ship/clss_deployment_package.zip -d /ship/clss_deployment_package
-    # - name: Update config.json with secrets
-    #   run: |
-    #     sed -i "s|\"portalUrl\": \"${{ secrets.AGOL_PORTAL_URL }}\"|g" clss_deployment_package/config.json
-    #     sed -i "s|\"username\": \"${{ secrets.AGOL_USERNAME }}\"|g" clss_deployment_package/config.json
-    #     sed -i "s|\"password\": \"${{ secrets.AGOL_PASSWORD }}\"|g" clss_deployment_package/config.json
-    #     sed -i "s|\"appUrl\": \"${{ secrets.AZURE_WEBSITE_URL }}\"|g" clss_deployment_package/config.json
-    #   working-directory: ship/clss_deployment_package
-    # - name: Run node script, deploy.js to create app code
-    #   run: |
-    #     if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
-    #       node -e "require('./deploy.js').executeDeployment()"
-    #     fi
-
-    # - name: Deploy app to azure static web app
-    #   uses: Azure/static-web-apps-deploy@v1
-    #   with:
-    #     azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_DEPLOYMENT_TEST_SITE }}
-    #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-    #     action: "upload"
-    #     app_location: "/clss_deployment_package/app" # App source code path
-    #     api_location: "" # Api source code path - optional
-    #     output_location: "/clss_deployment_package/app" # Built app content directory - optional
-    #     production_branch: "main"
-    #     skip_app_build: true
-    #     skip_api_build: true
-
-    ###### End of Repository/Build Configurations  ######
+      ###### End of Repository/Build Configurations  ######
