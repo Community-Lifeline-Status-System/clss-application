@@ -18,13 +18,11 @@ jobs:
       - name: Verify zip file exists
         run: |
           test -f readme.zip
-        working-directory: ship
 
       - name: Check file info
         run: |
           file readme.zip
           ls -lh readme.zip
-        working-directory: ship
 
       - name: Check if unzip command is available
         run: |
@@ -36,7 +34,6 @@ jobs:
       - name: Unzip readme.zip
         run: |
           unzip -q readme.zip -d ship
-        working-directory: ship
 
       - name: Print files in ship directory after unzip
         run:
