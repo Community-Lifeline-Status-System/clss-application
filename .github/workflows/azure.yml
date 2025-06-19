@@ -33,7 +33,7 @@ jobs:
 
       - name: Unzip your-archive.zip
         run: |
-          unzip -q your-archive.zip -d
+          unzip -q your-archive.zip
 
       - name: Print files in ship directory after unzip
         run:
