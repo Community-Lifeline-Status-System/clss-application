@@ -14,36 +14,17 @@ jobs:
         run: pwd
       - name: list files in the current directory
         run: ls -la
-      - name: Create ship directory
-        run: mkdir -p ship
-      - name: Copy clss_deployment.zip to ship directory
-        run: cp clss_deployment.zip ship/
-      - name: Print files in ship directory
-        run: ls -la ship
-
-      - name: Change directory to ship
-        run: cd ship
-
-      - name: Print current working directory
-        run: pwd
 
       - name: Verify zip file exists
         run: |
-          test -f clss_deployment.zip
+          test -f readme.zip
         working-directory: ship
 
       - name: Check file info
         run: |
-          file clss_deployment.zip
-          ls -lh clss_deployment.zip
+          file readme.zip
+          ls -lh readme.zip
         working-directory: ship
-
-      - name: Check if tar command is available
-        run: |
-          if ! command -v tar &> /dev/null; then
-            echo "tar command not found"
-            exit 1
-          fi
 
       - name: Check if unzip command is available
         run: |
@@ -52,9 +33,9 @@ jobs:
             exit 1
           fi
 
-      - name: Unzip clss_deployment.zip
+      - name: Unzip readme.zip
         run: |
-          unzip -q clss_deployment.zip -d ship
+          unzip -q readme.zip -d ship
         working-directory: ship
 
       - name: Print files in ship directory after unzip
