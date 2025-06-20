@@ -26,11 +26,15 @@ jobs:
 
       - name: Update config.json with secrets
         run: |
-          sed -i "s|\"portalUrl\": \"${{ secrets.AGOL_PORTAL_URL }}\"|g" clss_deployment/config.json
-          sed -i "s|\"username\": \"${{ secrets.AGOL_USERNAME }}\"|g" clss_deployment/config.json
-          sed -i "s|\"password\": \"${{ secrets.AGOL_PASSWORD }}\"|g" clss_deployment/config.json
-          sed -i "s|\"appUrl\": \"${{ secrets.AZURE_WEBSITE_URL }}\"|g" clss_deployment/config.json
+          sed -i 's|"portalUrl": "${{ secrets.AGOL_PORTAL_URL }}"|g' clss_deployment/config.json
+          sed -i "s|"username": "${{ secrets.AGOL_USERNAME }}"|g' clss_deployment/config.json
+          sed -i 's|"password": "${{ secrets.AGOL_PASSWORD }}"|g' clss_deployment/config.json
+          sed -i "s|"appUrl": "${{ secrets.AZURE_WEBSITE_URL }}"|g' clss_deployment/config.json
         working-directory: clss_deployment
+
+      - name: Read config.json
+        run: |
+          cat clss_deployment/config.json
 
       - name: Run node script, deploy.js to create app code
         run: |
