@@ -17,7 +17,7 @@ jobs:
         run: |
           unzip -q clss_deployment.zip
 
-      - name: Update config.json with secrets
+      - name: Update config.json with secret vrariables
         env:
           AGOL_PORTAL_URL: ${{ secrets.AGOL_PORTAL_URL }}
           AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
@@ -35,12 +35,6 @@ jobs:
             node -e "require('./deploy.js').executeDeployment()"
           fi
         working-directory: clss_deployment
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app
-          path: clss_deployment/app
 
       - name: Deploy app to azure static web app
         uses: Azure/static-web-apps-deploy@v1
