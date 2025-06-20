@@ -36,13 +36,15 @@ jobs:
           sed -i "s|\"password\": \".*\"|\"password\": \"$AGOL_PASSWORD\"|g" clss_deployment/config.json
           sed -i "s|\"appUrl\": \".*\"|\"appUrl\": \"$AZURE_WEBSITE_URL\"|g" clss_deployment/config.json
 
-      - name: Read config.json
-        run: |
-          cat clss_deployment/config.json
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: configs
+          path: clss_deployment/config.json
 
       - name: Run node script, deploy.js to create app code
         run: |
-          if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
+          if [[ ${{ github.ref }} == 'refs/heads/dev' ]]; then
             node -e "require('./deploy.js').executeDeployment()"
           fi
         working-directory: clss_deployment
