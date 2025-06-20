@@ -1,4 +1,4 @@
-Create the following GITHUB Secrets
+Create the following GITHUB Secrets:
 
 1. GITHUB_TOKEN
 2. AZURE_STATIC_WEB_APPS_DEPLOYMENT_TEST_SITE
