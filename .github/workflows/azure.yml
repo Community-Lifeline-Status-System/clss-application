@@ -31,7 +31,7 @@ jobs:
           AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
           AZURE_WEBSITE_URL: ${{ secrets.AZURE_WEBSITE_URL }}
         run: |
-          sed -i "s|\"portalUrl\": \".*\"|\"portalUrl\": \"$AGOL_URL\"|g" clss_deployment/config.json
+          sed -i "s|\"portalUrl\": \".*\"|\"portalUrl\": \"$AGOL_PORTAL_URL\"|g" clss_deployment/config.json
           sed -i "s|\"username\": \".*\"|\"username\": \"$AGOL_USERNAME\"|g" clss_deployment/config.json
           sed -i "s|\"password\": \".*\"|\"password\": \"$AGOL_PASSWORD\"|g" clss_deployment/config.json
           sed -i "s|\"appUrl\": \".*\"|\"appUrl\": \"$AZURE_WEBSITE_URL\"|g" clss_deployment/config.json
