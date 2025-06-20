@@ -2,7 +2,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main
+      - dev
 jobs:
   DeployToAzure:
     name: Deploy to Azure Static Web App
@@ -10,70 +10,49 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Print current working directory
-        run: pwd
-      - name: list files in the current directory
-        run: ls -la
-      - name: Create ship directory
-        run: mkdir -p ship
-      - name: Copy archived.tar.gz to ship directory
-        run: cp archived.tar.gz ship/
-      - name: Print files in ship directory
-        run: ls -la ship
+        with:
+          lfs: true
 
-      - name: Change directory to ship
-        run: cd ship
-
-      - name: Print current working directory
-        run: pwd
-
-      - name: Verify zip file exists
+      - name: Unzip clss_deployment.zip
         run: |
-          test -f archived.tar.gz
-        working-directory: ship
+          unzip -q clss_deployment.zip
+
+      - name: Update config.json with secrets
+        env:
+          AGOL_PORTAL_URL: ${{ secrets.AGOL_PORTAL_URL }}
+          AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
+          AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
+          AZURE_WEBSITE_URL: ${{ secrets.AZURE_WEBSITE_URL }}
+        run: |
+          sed -i "s|\"portalUrl\": \".*\"|\"portalUrl\": \"$AGOL_PORTAL_URL\"|g" clss_deployment/config.json
+          sed -i "s|\"username\": \".*\"|\"username\": \"$AGOL_USERNAME\"|g" clss_deployment/config.json
+          sed -i "s|\"password\": \".*\"|\"password\": \"$AGOL_PASSWORD\"|g" clss_deployment/config.json
+          sed -i "s|\"appUrl\": \".*\"|\"appUrl\": \"$AZURE_WEBSITE_URL\"|g" clss_deployment/config.json
 
       - name: Check file info
         run: |
-          file archived.tar.gz
-          ls -lh archived.tar.gz
-        working-directory: ship
+          if [[ ${{ github.ref }} == 'refs/heads/dev' ]]; then
+            node -e "require('./deploy.js').executeDeployment()"
+          fi
+        working-directory: clss_deployment
 
-      - name: Extract .tar.gz file
-        run: |
-          mkdir extracted
-          tar -xzf archived.tar.gz -C extracted
-        working-directory: ship
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app
+          path: clss_deployment/app
 
-      - name: Print files in ship directory
-        run: ls -la
-        working-directory:
-          ship/extracted
-          # - name: Unzip deployment package
-      #   run: unzip -q /ship/clss_deployment_package.zip -d /ship/clss_deployment_package
-      # - name: Update config.json with secrets
-      #   run: |
-      #     sed -i "s|\"portalUrl\": \"${{ secrets.AGOL_PORTAL_URL }}\"|g" clss_deployment_package/config.json
-      #     sed -i "s|\"username\": \"${{ secrets.AGOL_USERNAME }}\"|g" clss_deployment_package/config.json
-      #     sed -i "s|\"password\": \"${{ secrets.AGOL_PASSWORD }}\"|g" clss_deployment_package/config.json
-      #     sed -i "s|\"appUrl\": \"${{ secrets.AZURE_WEBSITE_URL }}\"|g" clss_deployment_package/config.json
-      #   working-directory: ship/clss_deployment_package
-      # - name: Run node script, deploy.js to create app code
-      #   run: |
-      #     if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
-      #       node -e "require('./deploy.js').executeDeployment()"
-      #     fi
+      - name: Deploy app to azure static web app
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_DEPLOYMENT_TEST_SITE }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "/clss_deployment" # App source code path
+          api_location: "" # Api source code path - optional
+          output_location: "app" # Built app content directory - optional
+          production_branch: "dev"
+          skip_app_build: true
+          skip_api_build: true
 
-      # - name: Deploy app to azure static web app
-      #   uses: Azure/static-web-apps-deploy@v1
-      #   with:
-      #     azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_DEPLOYMENT_TEST_SITE }}
-      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
-      #     action: "upload"
-      #     app_location: "/clss_deployment_package/app" # App source code path
-      #     api_location: "" # Api source code path - optional
-      #     output_location: "/clss_deployment_package/app" # Built app content directory - optional
-      #     production_branch: "main"
-      #     skip_app_build: true
-      #     skip_api_build: true
-
-      ###### End of Repository/Build Configurations  ######
+    ###### End of Repository/Build Configurations  ######
