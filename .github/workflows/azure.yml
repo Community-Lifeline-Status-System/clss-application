@@ -22,7 +22,7 @@ jobs:
           unzip -q clss_deployment.zip
 
       - name: Print files in directory after unzip
-        run: ls -la
+        run: ls -la clss_deployment
 
     #   - name: Update config.json with secrets
     #     run: |
