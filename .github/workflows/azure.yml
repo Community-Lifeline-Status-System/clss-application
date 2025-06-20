@@ -31,12 +31,9 @@ jobs:
 
       - name: Run deployment script
         run: |
-          chmod +x deploy.js
-          node deploy.js
-        # run: |
-        #   if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
-        #     node -e "require('./deploy.js').executeDeployment()"
-        #   fi
+          if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
+            node -e "require('./deploy.js').executeDeployment()"
+          fi
         working-directory: clss_deployment
 
       - name: Deploy app to azure static web app
