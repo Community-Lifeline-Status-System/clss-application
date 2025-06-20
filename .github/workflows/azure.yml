@@ -25,11 +25,16 @@ jobs:
         run: ls -la clss_deployment
 
       - name: Update config.json with secrets
+        env:
+          AGOL_PORTAL_URL: ${{ secrets.AGOL_PORTAL_URL }}
+          AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
+          AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
+          AZURE_WEBSITE_URL: ${{ secrets.AZURE_WEBSITE_URL }}
         run: |
-          sed -i 's|"portalUrl": "${{ secrets.AGOL_PORTAL_URL }}"|g' clss_deployment/config.json
-          sed -i "s|"username": "${{ secrets.AGOL_USERNAME }}"|g' clss_deployment/config.json
-          sed -i 's|"password": "${{ secrets.AGOL_PASSWORD }}"|g' clss_deployment/config.json
-          sed -i "s|"appUrl": "${{ secrets.AZURE_WEBSITE_URL }}"|g' clss_deployment/config.json
+          sed -i "s|\"portalUrl\": \".*\"|\"portalUrl\": \"$AGOL_URL\"|g" clss_deployment/config.json
+          sed -i "s|\"username\": \".*\"|\"username\": \"$AGOL_USERNAME\"|g" clss_deployment/config.json
+          sed -i "s|\"password\": \".*\"|\"password\": \"$AGOL_PASSWORD\"|g" clss_deployment/config.json
+          sed -i "s|\"appUrl\": \".*\"|\"appUrl\": \"$AZURE_WEBSITE_URL\"|g" clss_deployment/config.json
         working-directory: clss_deployment
 
       - name: Read config.json
