@@ -35,7 +35,6 @@ jobs:
           sed -i "s|\"username\": \".*\"|\"username\": \"$AGOL_USERNAME\"|g" clss_deployment/config.json
           sed -i "s|\"password\": \".*\"|\"password\": \"$AGOL_PASSWORD\"|g" clss_deployment/config.json
           sed -i "s|\"appUrl\": \".*\"|\"appUrl\": \"$AZURE_WEBSITE_URL\"|g" clss_deployment/config.json
-        working-directory: clss_deployment
 
       - name: Read config.json
         run: |
