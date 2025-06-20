@@ -29,11 +29,14 @@ jobs:
           sed -i "s|\"password\": \".*\"|\"password\": \"$AGOL_PASSWORD\"|g" clss_deployment/config.json
           sed -i "s|\"appUrl\": \".*\"|\"appUrl\": \"$AZURE_WEBSITE_URL\"|g" clss_deployment/config.json
 
-      - name: Check file info
+      - name: Run deployment script
         run: |
-          if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
-            node -e "require('./deploy.js').executeDeployment()"
-          fi
+          chmod +x clss_deployment/deploy.js
+          node clss_deployment/deploy.js
+        # run: |
+        #   if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
+        #     node -e "require('./deploy.js').executeDeployment()"
+        #   fi
         working-directory: clss_deployment
 
       - name: Deploy app to azure static web app
