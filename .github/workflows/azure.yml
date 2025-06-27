@@ -41,7 +41,7 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_DEPLOYMENT_TEST_SITE }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: "upload"
+          action: "upload" # Action
           app_location: "/clss_deployment/app" # App source code path
           api_location: "" # Api source code path - optional
           output_location: "app" # Built app content directory - optional
