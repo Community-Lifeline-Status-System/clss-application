@@ -16,6 +16,9 @@ jobs:
       - name: Unzip clss_deployment.zip
         run: |
           unzip -q clss_deployment.zip
+      
+      - name: Install Node.js Dependencies
+        run: npm install
 
       - name: Update config.json with secret variables
         env:
