@@ -7,6 +7,8 @@ jobs:
   DeployToAzure:
     name: Deploy to Azure Static Web App
     runs-on: ubuntu-latest
+    environment:
+      name: CLSS Prod
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -23,17 +25,17 @@ jobs:
 
       - name: Update config.json with secret variables
         env:
-          AGOL_PORTAL_URL: ${{ secrets.AGOL_PORTAL_URL }}
-          AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
-          AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
-          AZURE_WEBSITE_URL: ${{ secrets.AZURE_WEBSITE_URL }}
-          MY_ENVIRONMENT: 'xyz'
+          ARCGIS_PORTAL_URL: ${{ vars.ARCGIS_PORTAL_URL }}
+          ARCGIS_USERNAME: ${{ secrets.AGOL_USERNAME }}
+          ARCGIS_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
+          CLSS_DOMAIN_URL: ${{ vars.CLSS_DOMAIN_URL }}
+          ARCGIS_OBJECT_SUFFIX: ${{ vars.ARCGIS_OBJECT_SUFFIX }}
         run: |
-          sed -i "s|\"portalUrl\": \".*\"|\"portalUrl\": \"$AGOL_PORTAL_URL\"|g" clss_deployment/config.json
-          sed -i "s|\"username\": \".*\"|\"username\": \"$AGOL_USERNAME\"|g" clss_deployment/config.json
-          sed -i "s|\"password\": \".*\"|\"password\": \"$AGOL_PASSWORD\"|g" clss_deployment/config.json
-          sed -i "s|\"appUrl\": \".*\"|\"appUrl\": \"$AZURE_WEBSITE_URL\"|g" clss_deployment/config.json
-          sed -i "s|\"environment\": \".*\"|\"environment\": \"$MY_ENVIRONMENT\"|g" clss_deployment/config.json
+          sed -i "s|\"portalUrl\": \".*\"|\"portalUrl\": \"$ARCGIS_PORTAL_URL\"|g" clss_deployment/config.json
+          sed -i "s|\"username\": \".*\"|\"username\": \"$ARCGIS_USERNAME\"|g" clss_deployment/config.json
+          sed -i "s|\"password\": \".*\"|\"password\": \"$ARCGIS_PASSWORD\"|g" clss_deployment/config.json
+          sed -i "s|\"appUrl\": \".*\"|\"appUrl\": \"$CLSS_DOMAIN_URL\"|g" clss_deployment/config.json
+          sed -i "s|\"environment\": \".*\"|\"environment\": \"$ARCGIS_OBJECT_SUFFIX\"|g" clss_deployment/config.json
 
       - name: Run deployment script
         run: |
@@ -45,7 +47,7 @@ jobs:
       - name: Deploy app to azure static web app
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_DEPLOYMENT_TEST_SITE }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APP_DEPLOYMENT_TOKEN }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload" # Action
           app_location: "/clss_deployment/app" # App source code path
