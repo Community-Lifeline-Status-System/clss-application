@@ -17,7 +17,7 @@ jobs:
         run: |
           unzip -q clss_deployment.zip
       
-      - name: Install Node.js Dependencies
+      - name: Install Node.js Dependencies #installing node dependencies instead of packaging it up in the zip
         run: npm install --legacy-peer-deps
         working-directory: clss_deployment
 
