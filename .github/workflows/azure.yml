@@ -17,7 +17,7 @@ jobs:
         run: |
           unzip -q clss_deployment.zip
 
-      - name: Update config.json with secret vrariables
+      - name: Update config.json with secret variables
         env:
           AGOL_PORTAL_URL: ${{ secrets.AGOL_PORTAL_URL }}
           AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
@@ -32,7 +32,7 @@ jobs:
       - name: Run deployment script
         run: |
           if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
-            node -e "require('./deploy.js').executeDeployment()"
+            node deploy.js
           fi
         working-directory: clss_deployment
 
