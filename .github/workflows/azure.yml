@@ -23,11 +23,13 @@ jobs:
           AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
           AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
           AZURE_WEBSITE_URL: ${{ secrets.AZURE_WEBSITE_URL }}
+          MY_ENVIRONMENT: 'xyz'
         run: |
           sed -i "s|\"portalUrl\": \".*\"|\"portalUrl\": \"$AGOL_PORTAL_URL\"|g" clss_deployment/config.json
           sed -i "s|\"username\": \".*\"|\"username\": \"$AGOL_USERNAME\"|g" clss_deployment/config.json
           sed -i "s|\"password\": \".*\"|\"password\": \"$AGOL_PASSWORD\"|g" clss_deployment/config.json
           sed -i "s|\"appUrl\": \".*\"|\"appUrl\": \"$AZURE_WEBSITE_URL\"|g" clss_deployment/config.json
+          sed -i "s|\"environment\": \".*\"|\"environment\": \"$MY_ENVIRONMENT\"|g" config.json
 
       - name: Run deployment script
         run: |
