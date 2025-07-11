@@ -19,6 +19,7 @@ jobs:
       
       - name: Install Node.js Dependencies
         run: npm install
+        working-directory: clss_deployment
 
       - name: Update config.json with secret variables
         env:
