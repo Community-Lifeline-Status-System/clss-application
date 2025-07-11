@@ -18,7 +18,7 @@ jobs:
           unzip -q clss_deployment.zip
       
       - name: Install Node.js Dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
         working-directory: clss_deployment
 
       - name: Update config.json with secret variables
