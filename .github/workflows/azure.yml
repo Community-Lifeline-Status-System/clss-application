@@ -26,8 +26,8 @@ jobs:
       - name: Update config.json with secret variables
         env:
           ARCGIS_PORTAL_URL: ${{ vars.ARCGIS_PORTAL_URL }}
-          ARCGIS_USERNAME: ${{ secrets.AGOL_USERNAME }}
-          ARCGIS_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
+          ARCGIS_USERNAME: ${{ secrets.ARCGIS_USERNAME }}
+          ARCGIS_PASSWORD: ${{ secrets.ARCGIS_PASSWORD }}
           CLSS_DOMAIN_URL: ${{ vars.CLSS_DOMAIN_URL }}
           ARCGIS_OBJECT_SUFFIX: ${{ vars.ARCGIS_OBJECT_SUFFIX }}
         run: |
