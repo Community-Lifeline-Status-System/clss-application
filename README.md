@@ -41,6 +41,8 @@ Create these as **Secrets**. They are encrypted and will not be exposed in logs.
 
 ##### Deployment to Azure Static Web App
 
+If deploying to Azure Static Web app, configure the app as a Standard App in Azure prior to running the deployment. Once the pipeline runs, the application can be marked as the "Free" version in Azure. 
+
 | Secret Name                                  | Description                                                                                        |
 | -------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | `AZURE_STATIC_WEB_APP_DEPLOYMENT_TOKEN` | The deployment token for your specific Azure Static Web App. You can get this from the Azure portal under Manage Deployment Token |
