@@ -60,11 +60,6 @@ Create these as **Variables** in an environment called **CLSS Prod**. They are s
 | `ARCGIS_OBJECT_SUFFIX` | An optional set of characters to include in the deployed ARCGIS artifact names. For instance, if the suffix is entered as '_prod', the deployed feature service will be named CLSS_FeatureService_prod and the OAuth 2.0 app will be named CLSS_APP_prod. This is not a required field |
 
 
-## Optional Health Check Setup
+## Run Post Deployment Verification and Configuration
 
-This project includes an automated health check script that can monitor the status of your registered data library items. 
-
-1.  **Download the Notebook**: Locate the health check notebook file (`CLSS Healthcheck.ipynb`) within the repository.
-2.  **Upload and Configure**: Upload this notebook to your ArcGIS environment. You will need to configure it to run on a schedule (e.g. Weekly, Monthly). Also update the featureServiceItemId variable in the notebook to point to the CLSS feature service item id deployed to your ArcGIS environment. 
-
-**Note**: If you do not have notebooks enabled in your ArcGIS environment, this automated health check functionality will not be available. However, you will still be able to run health checks on individual items manually from within the CLSS application.
+Open the 'CLSS Post Deployment Guide.pdf' file and run through the verification and configuration steps. 
