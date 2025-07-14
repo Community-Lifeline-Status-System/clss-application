@@ -1,6 +1,6 @@
 # Community Lifeline Status System (CLSS) Deployment
 
-This repository contains the source code and automated deployment scripts for the Community Lifeline Status System (CLSS) application.
+This repository contains the source code and automated deployment scripts to deploy the Community Lifeline Status System (CLSS) application.
 
 
 ## Project Structure
@@ -14,8 +14,8 @@ The key components of this repository are:
 
 The central piece of automation is the `deploy.js` script, located within `clss_deployment.zip`. Regardless of the final hosting destination, this script connects to your ArcGIS organization and performs the following critical setup tasks:
 
-* **Creates User Groups**: Sets up necessary user groups (e.g., `CLSS Admins`, `CLSS Users`).
-* **Provisions Feature Service**: Creates or updates the core Feature Service that stores the application's data.
+* **Creates User Groups**: Sets up necessary user groups (e.g., `CLSS Admin`, `CLSS Assessor`).
+* **Creates Feature Service**: Creates the core Feature Service that stores the application's data.
 * **Creates Web Map**: Generates the Web Map used by the front-end application.
 * **Registers OAuth Application**: Registers the application within ArcGIS to get a Client ID, enabling secure user authentication.
 * **Sets Permissions**: Shares the created ArcGIS items with the appropriate user groups.
@@ -34,8 +34,8 @@ Create these as **Secrets**. They are encrypted and will not be exposed in logs.
 
 | Secret Name     | Description                                                                                         |
 | --------------- | --------------------------------------------------------------------------------------------------- |
-| `ARCGIS_USERNAME` | The username of an ArcGIS user with administrative privileges to create items, groups, and users.   |
-| `ARCGIS_PASSWORD` | The password for the ArcGIS administrative user.                                                    |
+| `ARCGIS_USERNAME` | The username of an ArcGIS Creator Account user with administrative privileges to create items and groups.   |
+| `ARCGIS_PASSWORD` | The password of the ArcGIS Creator Account user.                                                    |
 
 #### Deployment Target Secrets
 
@@ -43,18 +43,28 @@ Create these as **Secrets**. They are encrypted and will not be exposed in logs.
 
 | Secret Name                                  | Description                                                                                        |
 | -------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| `AZURE_STATIC_WEB_APP_DEPLOYMENT_TOKEN` | The deployment token for your specific Azure Static Web App. You can get this from the Azure portal. |
+| `AZURE_STATIC_WEB_APP_DEPLOYMENT_TOKEN` | The deployment token for your specific Azure Static Web App. You can get this from the Azure portal under Manage Deployment Token |
 
 *(Note: The `GITHUB_TOKEN` is a built-in secret provided by GitHub Actions and does not need to be created manually.)*
 
 ### Variables (for non-sensitive data)
 
-Create these as **Variables** in an environment called **CLSS Prod**. They are stored as plain text and are safe to be viewed in logs.
+Create these as **Variables** in an environment called **CLSS Prod**. They are stored as plain text and are safe to be viewed in logs. You can view the variables under **Settings > Secrets and variables > Actions** and create a new environment from the Variables tab. 
 
 #### Core ArcGIS Variables (Required for all deployments)
 
 | Variable Name     | Description                                                              |
 | ----------------- | ------------------------------------------------------------------------ |
-| `ARCGIS_PORTAL_URL` | The URL of your ArcGIS Online organization or ArcGIS Enterprise portal.  |
-| `CLSS_DOMAIN_URL` | The domain/url that the CLSS site will be accessed from.  |
-| `ARCGIS_OBJECT_SUFFIX` | A set of characters to include in the deployed ARCGIS artifacts names. For instance, if the suffix is entered as '_prod', the deployed feature service will be named CLSS_FeatureService_prod  |
+| `ARCGIS_PORTAL_URL` | The URL of your ArcGIS Online organization or ArcGIS Enterprise portal. Example for Enterprise: https://arcgis.gh-dev.com/portal, Example for ArcGIS Online:  https://ghis.maps.arcgis.com  |
+| `CLSS_DOMAIN_URL` | The domain/url that the CLSS site will be accessed from. Example: https://www.houstonclss.com  |
+| `ARCGIS_OBJECT_SUFFIX` | An optional set of characters to include in the deployed ARCGIS artifact names. For instance, if the suffix is entered as '_prod', the deployed feature service will be named CLSS_FeatureService_prod and the OAuth 2.0 app will be named CLSS_APP_prod. This is not a required field |
+
+
+## Optional Health Check Setup
+
+This project includes an automated health check script that can monitor the status of your registered data library items. 
+
+1.  **Download the Notebook**: Locate the health check notebook file (`CLSS Healthcheck.ipynb`) within the repository.
+2.  **Upload and Configure**: Upload this notebook to your ArcGIS environment. You will need to configure it to run on a schedule (e.g. Weekly, Monthly). Also update the featureServiceItemId variable in the notebook to point to the CLSS feature service item id deployed to your ArcGIS environment. 
+
+**Note**: If you do not have notebooks enabled in your ArcGIS environment, this automated health check functionality will not be available. However, you will still be able to run health checks on individual items manually from within the CLSS application.
